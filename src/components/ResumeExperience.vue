@@ -19,9 +19,9 @@ const experiences = [
     period: 'Sept 2019 - March 2024',
     location: 'Bangsar South, Kuala Lumpur, Malaysia',
     bullets: [
-      'Built responsive client dashboards using Vue 2/3 and RESTful API integrations with Express.',
-      'Maintained and optimized CI/CD workflows utilizing GitHub Actions, cutting build-to-deploy pipeline times by 15 minutes.',
-      'Integrated Stripe payments and automated subscription billing workflows, growing checkout conversions by 12%.'
+      'Developed Business License Management System (BLMS) using ReactJS, .NET Core and MSSSQL, enabling centralized tracking and maintenance of business licenses across all UEM subsidiaries — both domestic and international.',
+      'Developed Travel Management System (Edgenta Travel) using VueJS, .NET Core and MSSSQL, streamlining travel booking process including transport, accommodation, and travel management for staff across the organization — both domestic and international.',
+      'Pioneered DevOps adoption across the organization by leading the setup and maintenance of key tools including GitHub and GitHub Actions, Docker, SonarQube, ELK Stack and Grafana, HashiCorp Vault, and K6 & Playwright, promoting CI/CD automation, code quality, and security compliance across development and operations workflows.'
     ]
   },
   {
@@ -30,9 +30,10 @@ const experiences = [
     period: 'October 2015 - September 2024',
     location: 'Persiaran KLCC, Kuala Lumpur, Malaysia',
     bullets: [
-      'Developed 20+ pixel-perfect client marketing sites and web apps using CSS grid, vanilla JS, and Vue.',
-      'Collaborated closely with designers using Figma to refine UX flow, lowering user bounce rates by an average of 18%.',
-      'Optimized image loaders, fonts, and assets for fast loading speed, scoring 95+ on Google Lighthouse audits.'
+      'Developed Gatepass Management System (GMS) using .NET MVC and MSSQL, enabling real-time monitoring and control of lorry movement in and out of palm oil mills, improving security and logistics tracking.',
+      'Developed Grading System in .NET MVC and MSSQL to automate data integration with the weighing system and assist workers in grading palm fruit. The system supports thermal receipt printing and generates detailed grading reports for management insights.',
+      'Collaborated with external vendors in developing the FELDA GIS System using React.js, Laravel and MSSQL, enabling geospatial visualization and data integration of residential areas and oil palm trees across FELDA plantations.',
+      'Contributed to onsite system testing, user training, and ongoing enhancements to ensure scalability and alignment with operational needs.'
     ]
   }
 ]
