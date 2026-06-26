@@ -1,7 +1,7 @@
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Pagination, Navigation } from 'swiper/modules'
-import { Cloud, Cpu, Network, Award, ExternalLink, Calendar, FileText } from '@lucide/vue'
+import { Cloud, Cpu, Network, Award, ExternalLink, Calendar, FileText, ChevronLeft, ChevronRight } from '@lucide/vue'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -12,44 +12,81 @@ const swiperModules = [Pagination, Navigation]
 
 const certificates = [
   {
-    title: 'AWS Certified Solutions Architect - Associate',
-    issuer: 'Amazon Web Services (AWS)',
-    issueDate: 'January 2025',
-    credentialId: 'AWS-ASA-10293',
+    title: 'Microsoft Azure Solution Architect Expert',
+    issuer: 'Microsoft',
+    issueDate: 'May 2024',
+    credentialId: '683FDBDB1A1321DC',
     link: 'https://aws.amazon.com/',
     icon: Cloud,
     color: '#3b82f6', /* Blue */
     theme: 'Cloud Solutions Architecture'
   },
   {
-    title: 'Google Professional Machine Learning Engineer',
-    issuer: 'Google Cloud (Google)',
-    issueDate: 'November 2025',
-    credentialId: 'GCP-MLE-88301',
+    title: 'Microsoft Azure Security Engineer Associate',
+    issuer: 'Microsoft',
+    issueDate: 'April 2024',
+    credentialId: '52D5C712C72FAD28',
     link: 'https://cloud.google.com/',
     icon: Cpu,
     color: '#ec4899', /* Pink/Magenta */
-    theme: 'AI Technologies & Machine Learning'
+    theme: 'Cloud Security'
   },
   {
-    title: 'SAP Certified Technology Associate - System Integration',
-    issuer: 'SAP',
-    issueDate: 'August 2024',
-    credentialId: 'SAP-TEC-55402',
+    title: 'Microsoft Azure Administrator Associate',
+    issuer: 'Microsoft',
+    issueDate: 'April 2024',
+    credentialId: '66FB193C89519CFC',
     link: 'https://www.sap.com/',
     icon: Network,
     color: '#10b981', /* Emerald */
-    theme: 'SAP Systems / Enterprise Integration'
+    theme: 'Cloud Administration'
+  },
+  {
+    title: 'Android Mobile Application Developer',
+    issuer: 'IEEE Malaysia',
+    issueDate: 'November 2013',
+    credentialId: '-',
+    link: 'https://www.mbot.org.my/',
+    icon: Network,
+    color: '#10b981', /* Emerald */
+    theme: 'Mobile Development'
+  },
+  {
+    title: 'Graduate Technologist',
+    issuer: 'Malaysia Board of Technologists (MBOT)',
+    issueDate: 'December 2024',
+    credentialId: 'GT24120135',
+    link: 'https://www.mbot.org.my/',
+    icon: Network,
+    color: '#10b981', /* Emerald */
+    theme: 'Professional Membership'
+  },
+  {
+    title: 'Digital Leadership',
+    issuer: 'Peoplelogy Berhad & Yayasan Peneraju',
+    issueDate: 'January 2024',
+    credentialId: '-',
+    link: 'https://www.mbot.org.my/',
+    icon: Network,
+    color: '#10b981', /* Emerald */
+    theme: 'Leadership Development'
   }
 ]
 </script>
 
 <template>
   <section id="certificates" class="certificates-section">
-    <h2 class="section-title">Professional Certificates</h2>
-    <p class="section-lead">
-      Credentials and professional milestones validating specialization in Cloud, AI, and Enterprise Integration systems.
-    </p>
+    <div class="section-header">
+      <h2 class="section-title">Professional Certificates</h2>
+      <div class="slider-controls">
+        <button class="custom-prev-btn" aria-label="Previous slide">
+          <ChevronLeft :size="20" />
+        </button>
+        <button class="custom-next-btn" aria-label="Next slide">
+          <ChevronRight :size="20" />
+        </button>
+      </div>
+    </div>
 
     <!-- Swiper Slider Container -->
     <swiper
@@ -57,7 +94,10 @@ const certificates = [
       :slides-per-view="1"
       :space-between="24"
       :pagination="{ clickable: true }"
-      :navigation="true"
+      :navigation="{
+        prevEl: '.custom-prev-btn',
+        nextEl: '.custom-next-btn'
+      }"
       :breakpoints="{
         '768': {
           slidesPerView: 2,
@@ -105,13 +145,13 @@ const certificates = [
             </div>
 
             <!-- Footer Link -->
-            <div class="cert-footer">
+            <!-- <div class="cert-footer">
               <a :href="cert.link" target="_blank" rel="noopener" class="btn btn-secondary cert-link-btn">
                 <Award :size="16" />
                 <span>View Credential</span>
                 <ExternalLink :size="14" class="link-arrow" />
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
       </swiper-slide>
@@ -258,20 +298,40 @@ const certificates = [
   transform: translate(2px, -2px);
 }
 
-/* Custom Swiper Controls Styles (Scoped Deep Selectors) */
-:deep(.swiper-button-next),
-:deep(.swiper-button-prev) {
-  color: var(--text-primary);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+/* Custom Navigation Controls in Header */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
+.slider-controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.custom-prev-btn,
+.custom-next-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  cursor: pointer;
   transition: var(--transition-smooth);
 }
 
-:deep(.swiper-button-next:hover),
-:deep(.swiper-button-prev:hover) {
+.custom-prev-btn:hover,
+.custom-next-btn:hover {
   background: var(--bg-card-hover);
   color: var(--accent-color);
   border-color: var(--border-color-hover);
@@ -279,14 +339,12 @@ const certificates = [
   transform: scale(1.05);
 }
 
-:deep(.swiper-button-next::after),
-:deep(.swiper-button-prev::after) {
-  font-size: 1.1rem;
-  font-weight: 900;
-}
-
-:deep(.swiper-button-disabled) {
-  opacity: 0;
+/* Swiper disabled buttons styling */
+.swiper-button-disabled,
+.custom-prev-btn:disabled,
+.custom-next-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
   pointer-events: none;
 }
 
@@ -314,8 +372,7 @@ const certificates = [
   .certificates-slider {
     padding-bottom: 0 !important;
   }
-  :deep(.swiper-button-next),
-  :deep(.swiper-button-prev),
+  .slider-controls,
   :deep(.swiper-pagination) {
     display: none !important;
   }
@@ -327,8 +384,7 @@ const certificates = [
 }
 
 @media (max-width: 768px) {
-  :deep(.swiper-button-next),
-  :deep(.swiper-button-prev) {
+  .slider-controls {
     display: none !important; /* Hide arrows on mobile for swipe only */
   }
 }
