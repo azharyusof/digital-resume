@@ -1,17 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import { Mail, Phone, MapPin, Copy, Check, Send } from '@lucide/vue'
+import { ref, computed } from 'vue'
+import { Mail, Phone, MapPin, Copy, Check, QrCode } from '@lucide/vue'
 
 const email = 'nazhar.myusof@gmail.com'
 const phone = '(+60) 19-687 0771'
 const location = 'Bandar Puncak Alam, Selangor, Malaysia'
 
 const isCopied = ref(false)
-const formSubmitted = ref(false)
-
-const nameInput = ref('')
-const emailInput = ref('')
-const messageInput = ref('')
 
 const handleCopyEmail = async () => {
   try {
@@ -25,21 +20,17 @@ const handleCopyEmail = async () => {
   }
 }
 
-const handleSubmit = () => {
-  if (!nameInput.value || !emailInput.value || !messageInput.value) return
+// Compute the redirection target URL (VCard contact page)
+const targetUrl = computed(() => {
+  if (typeof window === 'undefined') return ''
+  return window.location.origin + window.location.pathname + '#/contact-card'
+})
 
-  // Simulate API post
-  formSubmitted.value = true
-  
-  // Clear form inputs
-  nameInput.value = ''
-  emailInput.value = ''
-  messageInput.value = ''
-
-  setTimeout(() => {
-    formSubmitted.value = false
-  }, 4000)
-}
+// Generate custom QR code matching theme styling (Background: card background #131b2e, Foreground: Indigo #6366f1)
+const qrCodeUrl = computed(() => {
+  if (!targetUrl.value) return ''
+  return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=6366f1&bgcolor=131b2e&data=${encodeURIComponent(targetUrl.value)}`
+})
 </script>
 
 <template>
@@ -94,56 +85,29 @@ const handleSubmit = () => {
         </div>
       </div>
 
-      <!-- Quick Message Form -->
-      <div class="glass-card contact-form-card">
-        <h3 class="form-title">Send a Message</h3>
+      <!-- Standalone QR Code Redirect Card -->
+      <div class="glass-card contact-qr-card">
+        <div class="qr-header">
+          <QrCode :size="24" class="qr-icon" />
+          <h3 class="form-title">Scan Virtual Card</h3>
+        </div>
         
-        <form v-if="!formSubmitted" @submit.prevent="handleSubmit" class="message-form">
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input 
-              type="text" 
-              id="name" 
-              v-model="nameInput" 
-              placeholder="John Doe" 
-              required 
-            />
-          </div>
+        <p class="qr-description">
+          Scan this code with your mobile device to open my dynamic contact screen. You can instantly message me on WhatsApp, call me, or save my details directly to your phone.
+        </p>
 
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input 
-              type="email" 
-              id="email" 
-              v-model="emailInput" 
-              placeholder="john@example.com" 
-              required 
-            />
+        <div class="qr-display-container">
+          <div class="qr-glow-layer"></div>
+          <div class="qr-image-wrapper">
+            <img :src="qrCodeUrl" alt="Contact QR Code" class="qr-image" />
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea 
-              id="message" 
-              v-model="messageInput" 
-              rows="4" 
-              placeholder="Hi Alex, I'd like to talk about..." 
-              required
-            ></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary submit-btn">
-            <Send :size="16" /> Send Message
-          </button>
-        </form>
-
-        <!-- Success Feedback Frame -->
-        <div v-else class="success-message animate-fade-in">
-          <div class="success-icon-wrapper">
-            <Check :size="32" />
-          </div>
-          <h4>Message Sent!</h4>
-          <p>Thank you for reaching out, Alex will get back to you shortly.</p>
+        <div class="desktop-fallback">
+          <span class="fallback-label">Or open directly on desktop:</span>
+          <a :href="targetUrl" class="fallback-link">
+            ay.dev/#/contact-card
+          </a>
         </div>
       </div>
     </div>
@@ -267,95 +231,106 @@ const handleSubmit = () => {
   transform: translateY(0);
 }
 
-.contact-form-card {
+/* QR Code Card Styles */
+.contact-qr-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 1.5rem;
+  padding: 2.5rem 2rem;
+}
+
+.qr-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.qr-icon {
+  color: var(--accent-color);
 }
 
 .form-title {
   font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
 }
 
-.message-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.form-group input,
-.form-group textarea {
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
+.qr-description {
   font-size: 0.95rem;
-  transition: var(--transition-smooth);
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
-.light-mode .form-group input,
-.light-mode .form-group textarea {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-.submit-btn {
-  align-self: flex-start;
-}
-
-.success-message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 3rem 1.5rem;
-  gap: 1rem;
-}
-
-.success-icon-wrapper {
+.qr-display-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  animation: float 4s ease-in-out infinite;
+  margin: 0.5rem 0;
 }
 
-.success-message h4 {
-  font-size: 1.3rem;
-  color: var(--text-primary);
+.qr-glow-layer {
+  position: absolute;
+  inset: -4px;
+  background: var(--gradient-accent);
+  border-radius: 1rem;
+  filter: blur(10px);
+  opacity: 0.35;
+}
+
+.qr-image-wrapper {
+  position: relative;
+  background: #131b2e; /* Mathing --bg-card of dark theme */
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  border-radius: 1rem;
+  z-index: 1;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.contact-qr-card:hover .qr-image-wrapper {
+  transform: scale(1.04);
+  border-color: var(--border-color-hover);
+}
+
+.qr-image {
+  width: 156px;
+  height: 156px;
+  display: block;
+}
+
+.desktop-fallback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
   margin-top: 0.5rem;
 }
 
-.success-message p {
-  color: var(--text-secondary);
+.fallback-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.fallback-link {
+  font-family: var(--font-heading);
   font-size: 0.95rem;
-  max-width: 300px;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.fallback-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
 }
 
 @media print {
@@ -363,7 +338,7 @@ const handleSubmit = () => {
     padding: 0;
     page-break-inside: avoid;
   }
-  .contact-form-card {
+  .contact-qr-card {
     display: none !important;
   }
   .interactive-copy {

@@ -8,9 +8,9 @@ const experiences = [
     period: 'March 2024 - April 2026',
     location: 'Petaling Jaya, Selangor, Malaysia',
     bullets: [
-      'Architected and co-developed a multi-tenant SaaS admin portal using Vue 3 (Composition API, Pinia) and Node.js, improving page performance by 40%.',
-      'Led a team of 4 frontend engineers to rebuild legacy apps, implementing a shared custom UI library reducing layout design-to-dev time by 50%.',
-      'Designed scalable database schemas in PostgreSQL and integrated Redis caching, resulting in a 30% reduction in query latencies.'
+      'Developed Workforce Management System (WMS) using Vue.js, Laravel and MySQL, designed for team management including attendance tracking, shift scheduling, overtime management, leave application and reporting service.',
+      'Developed scanning and verification mobile application using Flutter, .NET 8 and MSSQL, deployed to Google Play Store, Huawei AppGallery and Apple App Store. This application allows consumer to scan and verify new enhanced SIRIM label and helping user to confirm product authenticity and access detailed info for each certified item.',
+      'Developed Vending Machine System (VMS) using Android Native, Laravel and MySQL, designed for full environment of vending machine system including product catalog, payment, monitoring, maintenance and etc.'
     ]
   },
   {

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Sun, Moon, Menu, X, Terminal } from '@lucide/vue'
 
 import ResumeHero from './components/ResumeHero.vue'
@@ -7,9 +7,15 @@ import ResumeSkills from './components/ResumeSkills.vue'
 import ResumeExperience from './components/ResumeExperience.vue'
 import ResumeProjects from './components/ResumeProjects.vue'
 import ResumeContact from './components/ResumeContact.vue'
+import ResumeContactCard from './components/ResumeContactCard.vue'
 
 const isDarkMode = ref(true)
 const isMobileMenuOpen = ref(false)
+const currentHash = ref(window.location.hash)
+
+const updateHash = () => {
+  currentHash.value = window.location.hash
+}
 
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
@@ -24,6 +30,8 @@ const toggleTheme = () => {
 }
 
 onMounted(() => {
+  window.addEventListener('hashchange', updateHash)
+  
   const savedTheme = localStorage.getItem('theme')
   const root = document.documentElement
   if (savedTheme === 'light') {
@@ -35,6 +43,10 @@ onMounted(() => {
   }
 })
 
+onBeforeUnmount(() => {
+  window.removeEventListener('hashchange', updateHash)
+})
+
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
@@ -42,76 +54,82 @@ const closeMobileMenu = () => {
 
 <template>
   <div class="app-layout">
-    <!-- Decorative Glowing Blobs (Background) -->
-    <div class="glow-blob blob-1"></div>
-    <div class="glow-blob blob-2"></div>
+    <!-- Standalone Contact Card (Fullscreen) -->
+    <ResumeContactCard v-if="currentHash === '#/contact-card'" />
 
-    <!-- Navigation Header -->
-    <nav class="nav-bar">
-      <div class="container nav-container">
-        <!-- Logo -->
-        <a href="#" class="logo-link">
-          <Terminal :size="22" class="logo-icon" />
-          <span class="logo-text">Resume<span class="logo-dot">.</span>dev</span>
-        </a>
+    <!-- Main Resume Site -->
+    <template v-else>
+      <!-- Decorative Glowing Blobs (Background) -->
+      <div class="glow-blob blob-1"></div>
+      <div class="glow-blob blob-2"></div>
 
-        <!-- Desktop Navigation Links -->
-        <div class="nav-links-desktop">
-          <a href="#" class="nav-link">About</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#experience" class="nav-link">Experience</a>
-          <a href="#projects" class="nav-link">Projects</a>
-          <a href="#contact" class="nav-link">Contact</a>
+      <!-- Navigation Header -->
+      <nav class="nav-bar">
+        <div class="container nav-container">
+          <!-- Logo -->
+          <a href="#" class="logo-link">
+            <Terminal :size="22" class="logo-icon" />
+            <span class="logo-text">ay<span class="logo-dot">.</span>dev</span>
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <div class="nav-links-desktop">
+            <a href="#" class="nav-link">About</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </div>
+
+          <!-- Right Side Actions (Theme toggle + Mobile menu toggler) -->
+          <div class="nav-actions">
+            <button @click="toggleTheme" class="theme-toggle-btn" :aria-label="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+              <Sun v-if="isDarkMode" :size="20" />
+              <Moon v-else :size="20" />
+            </button>
+
+            <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="mobile-menu-toggle" aria-label="Toggle Menu">
+              <Menu v-if="!isMobileMenuOpen" :size="22" />
+              <X v-else :size="22" />
+            </button>
+          </div>
         </div>
+      </nav>
 
-        <!-- Right Side Actions (Theme toggle + Mobile menu toggler) -->
-        <div class="nav-actions">
-          <button @click="toggleTheme" class="theme-toggle-btn" :aria-label="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-            <Sun v-if="isDarkMode" :size="20" />
-            <Moon v-else :size="20" />
-          </button>
-
-          <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="mobile-menu-toggle" aria-label="Toggle Menu">
-            <Menu v-if="!isMobileMenuOpen" :size="22" />
-            <X v-else :size="22" />
-          </button>
+      <!-- Mobile Drawer Menu Overlay -->
+      <transition name="drawer">
+        <div v-if="isMobileMenuOpen" class="mobile-drawer">
+          <div class="drawer-links">
+            <a href="#" @click="closeMobileMenu" class="drawer-link">About</a>
+            <a href="#skills" @click="closeMobileMenu" class="drawer-link">Skills</a>
+            <a href="#experience" @click="closeMobileMenu" class="drawer-link">Experience</a>
+            <a href="#projects" @click="closeMobileMenu" class="drawer-link">Projects</a>
+            <a href="#contact" @click="closeMobileMenu" class="drawer-link">Contact</a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </transition>
 
-    <!-- Mobile Drawer Menu Overlay -->
-    <transition name="drawer">
-      <div v-if="isMobileMenuOpen" class="mobile-drawer">
-        <div class="drawer-links">
-          <a href="#" @click="closeMobileMenu" class="drawer-link">About</a>
-          <a href="#skills" @click="closeMobileMenu" class="drawer-link">Skills</a>
-          <a href="#experience" @click="closeMobileMenu" class="drawer-link">Experience</a>
-          <a href="#projects" @click="closeMobileMenu" class="drawer-link">Projects</a>
-          <a href="#contact" @click="closeMobileMenu" class="drawer-link">Contact</a>
+      <!-- Main Content Sections -->
+      <main class="container main-content">
+        <ResumeHero />
+        <hr class="section-divider" />
+        <ResumeSkills />
+        <hr class="section-divider" />
+        <ResumeExperience />
+        <hr class="section-divider" />
+        <ResumeProjects />
+        <hr class="section-divider" />
+        <ResumeContact />
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="container footer-container">
+          <p class="footer-copy">© 2026 Azhar Yusof. Built with Vue 3 & Vite.</p>
+          <p class="footer-status">Designed for performance and responsiveness.</p>
         </div>
-      </div>
-    </transition>
-
-    <!-- Main Content Sections -->
-    <main class="container main-content">
-      <ResumeHero />
-      <hr class="section-divider" />
-      <ResumeSkills />
-      <hr class="section-divider" />
-      <ResumeExperience />
-      <hr class="section-divider" />
-      <ResumeProjects />
-      <hr class="section-divider" />
-      <ResumeContact />
-    </main>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-      <div class="container footer-container">
-        <p class="footer-copy">© 2026 Azhar Yusof</p>
-        <p class="footer-status">Built with Vue 3 & Vite</p>
-      </div>
-    </footer>
+      </footer>
+    </template>
   </div>
 </template>
 
