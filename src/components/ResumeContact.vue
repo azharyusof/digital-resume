@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { Mail, Phone, MapPin, Copy, Check, Send } from '@lucide/vue'
 
-const email = 'alex.carter@dev.io'
-const phone = '+1 (555) 019-2834'
-const location = 'San Francisco, CA'
+const email = 'nazhar.myusof@gmail.com'
+const phone = '(+60) 19-687 0771'
+const location = 'Bandar Puncak Alam, Selangor, Malaysia'
 
 const isCopied = ref(false)
 const formSubmitted = ref(false)
@@ -50,7 +50,7 @@ const handleSubmit = () => {
       <!-- Contact Info Cards -->
       <div class="contact-info">
         <p class="contact-lead">
-          I’m always open to discussing new opportunities, freelance projects, or core tech integrations. Drop me a message or copy my email address.
+          I am actively seeking new opportunities and career growth. If you have an open position that matches my skills, feel free to contact me to get in touch.
         </p>
 
         <div class="info-cards-list">

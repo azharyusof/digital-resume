@@ -3,10 +3,10 @@ import { Calendar, MapPin, Building } from '@lucide/vue'
 
 const experiences = [
   {
-    role: 'Senior Full-Stack Engineer',
-    company: 'InnovateTech Solutions',
-    period: '2023 - Present',
-    location: 'San Francisco, CA (Remote)',
+    role: 'Assistant Team Lead, Software R&D',
+    company: 'XOX Technology Berhad',
+    period: 'March 2024 - April 2026',
+    location: 'Petaling Jaya, Selangor, Malaysia',
     bullets: [
       'Architected and co-developed a multi-tenant SaaS admin portal using Vue 3 (Composition API, Pinia) and Node.js, improving page performance by 40%.',
       'Led a team of 4 frontend engineers to rebuild legacy apps, implementing a shared custom UI library reducing layout design-to-dev time by 50%.',
@@ -14,10 +14,10 @@ const experiences = [
     ]
   },
   {
-    role: 'Full-Stack Developer',
-    company: 'Skyward Software Lab',
-    period: '2021 - 2023',
-    location: 'Austin, TX (Hybrid)',
+    role: 'Senior Software Engineer',
+    company: 'UEM Edgenta Berhad',
+    period: 'Sept 2019 - March 2024',
+    location: 'Bangsar South, Kuala Lumpur, Malaysia',
     bullets: [
       'Built responsive client dashboards using Vue 2/3 and RESTful API integrations with Express.',
       'Maintained and optimized CI/CD workflows utilizing GitHub Actions, cutting build-to-deploy pipeline times by 15 minutes.',
@@ -25,10 +25,10 @@ const experiences = [
     ]
   },
   {
-    role: 'Frontend Developer',
-    company: 'PixelPerfect Web Agency',
-    period: '2019 - 2021',
-    location: 'San Jose, CA',
+    role: 'System Analyst',
+    company: 'Felda Prodata System Sdn Bhd',
+    period: 'October 2015 - September 2024',
+    location: 'Persiaran KLCC, Kuala Lumpur, Malaysia',
     bullets: [
       'Developed 20+ pixel-perfect client marketing sites and web apps using CSS grid, vanilla JS, and Vue.',
       'Collaborated closely with designers using Figma to refine UX flow, lowering user bounce rates by an average of 18%.',
