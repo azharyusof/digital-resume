@@ -63,6 +63,7 @@ const closeMobileMenu = () => {
       <!-- Decorative Glowing Blobs (Background) -->
       <div class="glow-blob blob-1"></div>
       <div class="glow-blob blob-2"></div>
+      <div class="glow-blob blob-3"></div>
 
       <!-- Navigation Header -->
       <nav class="nav-bar">
@@ -152,32 +153,63 @@ const closeMobileMenu = () => {
 .glow-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
+  filter: blur(140px);
   z-index: -1;
-  opacity: 0.15;
+  opacity: 0.14;
   pointer-events: none;
 }
 
 .light-mode .glow-blob {
-  opacity: 0.08;
+  opacity: 0.06;
 }
 
 .blob-1 {
-  top: -10%;
+  top: -8%;
   right: -5%;
-  width: 500px;
-  height: 500px;
+  width: 550px;
+  height: 550px;
   background: var(--accent-color);
-  animation: float 10s ease-in-out infinite alternate;
+  animation: float-blob-1 25s infinite alternate ease-in-out;
 }
 
 .blob-2 {
-  top: 40%;
-  left: -10%;
+  top: 35%;
+  left: -8%;
+  width: 650px;
+  height: 650px;
+  background: var(--accent-secondary);
+  animation: float-blob-2 30s infinite alternate-reverse ease-in-out;
+}
+
+.blob-3 {
+  bottom: 8%;
+  right: -5%;
   width: 600px;
   height: 600px;
-  background: var(--accent-secondary);
-  animation: float 12s ease-in-out infinite alternate-reverse;
+  background: rgba(139, 92, 246, 0.65); /* Purple shift */
+  animation: float-blob-3 28s infinite alternate ease-in-out;
+}
+
+/* Dynamic, multi-dimensional floating background animations */
+@keyframes float-blob-1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(60px, 80px) scale(1.1) rotate(45deg); }
+  66% { transform: translate(-40px, 120px) scale(0.9) rotate(90deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(180deg); }
+}
+
+@keyframes float-blob-2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-80px, -60px) scale(0.85) rotate(-60deg); }
+  66% { transform: translate(40px, -100px) scale(1.15) rotate(-120deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(-180deg); }
+}
+
+@keyframes float-blob-3 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-50px, 90px) scale(1.1) rotate(60deg); }
+  66% { transform: translate(70px, -50px) scale(0.9) rotate(-60deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(120deg); }
 }
 
 /* Nav Bar Styles */

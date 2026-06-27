@@ -72,6 +72,29 @@ body {
   line-height: 1.6;
   transition: background-color 0.5s ease, color 0.5s ease;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle, professional tech dot-grid pattern overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    radial-gradient(rgba(99, 102, 241, 0.07) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: -2;
+  opacity: 1;
+  transition: background-image 0.5s ease;
+}
+
+.light-mode body::before {
+  background-image: 
+    radial-gradient(rgba(99, 102, 241, 0.03) 1.5px, transparent 1.5px);
 }
 
 #app {
