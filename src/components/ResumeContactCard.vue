@@ -46,21 +46,35 @@ END:VCARD`
 
 <template>
   <div class="card-screen animate-fade-in">
+    <!-- Decorative background floating glow spheres -->
+    <div class="bg-glow orb-1"></div>
+    <div class="bg-glow orb-2"></div>
+
     <!-- Back Button -->
-    <a href="#" class="back-link">
+    <!-- <a href="#" class="back-link">
       <ArrowLeft :size="16" /> Back to Resume
-    </a>
+    </a> -->
 
     <!-- Virtual Business Card Panel -->
     <div class="glass-card business-card-panel">
+      <!-- Mockup window traffic light decor -->
+      <div class="window-decor">
+        <span class="decor-dot red"></span>
+        <span class="decor-dot yellow"></span>
+        <span class="decor-dot green"></span>
+      </div>
+
       <!-- Card Header -->
       <div class="card-profile">
-        <div class="avatar-glow"></div>
-        <img src="../assets/avatar.png" alt="Azhar Yusof" class="profile-img" />
+        <div class="avatar-container">
+          <div class="avatar-glow"></div>
+          <img src="../assets/avatar.png" alt="Azhar Yusof" class="profile-img" />
+        </div>
         
         <h2 class="profile-name">{{ name }}</h2>
-        <p class="profile-title">{{ title }}</p>
-        <p class="profile-company">{{ company }}</p>
+        
+        <!-- Divider border between name and location badge -->
+        <div class="profile-divider"></div>
         
         <span class="location-badge">
           <MapPin :size="14" class="icon-spacing" /> {{ location }}
@@ -122,6 +136,47 @@ END:VCARD`
   justify-content: center;
   padding: 2rem 1.5rem;
   background: var(--bg-app);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Background floating glow spheres */
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 320px;
+  height: 320px;
+  background: var(--accent-color);
+  top: 15%;
+  left: 5%;
+  animation: float-orb-1 12s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+  width: 380px;
+  height: 380px;
+  background: var(--accent-secondary);
+  bottom: 15%;
+  right: 5%;
+  animation: float-orb-2 15s infinite alternate ease-in-out;
+}
+
+@keyframes float-orb-1 {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(30px, 40px) scale(1.15); }
+}
+
+@keyframes float-orb-2 {
+  from { transform: translate(0, 0) scale(1.15); }
+  to { transform: translate(-40px, -30px) scale(0.9); }
 }
 
 .back-link {
@@ -144,14 +199,44 @@ END:VCARD`
 .business-card-panel {
   width: 100%;
   max-width: 400px;
-  padding: 3rem 2rem 2.5rem;
+  padding: 3.5rem 2rem 2.5rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), var(--shadow-sm);
   border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
 }
+
+.business-card-panel:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* macOS traffic light mockup window controls */
+.window-decor {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  gap: 6px;
+}
+
+.decor-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.7;
+}
+
+.decor-dot.red { background-color: #ef4444; }
+.decor-dot.yellow { background-color: #f59e0b; }
+.decor-dot.green { background-color: #10b981; }
 
 .card-profile {
   display: flex;
@@ -160,49 +245,67 @@ END:VCARD`
   position: relative;
 }
 
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
 .profile-img {
-  width: 110px;
-  height: 110px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--bg-app);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   position: relative;
-  z-index: 1;
-  margin-bottom: 1.25rem;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+}
+
+.business-card-panel:hover .profile-img {
+  transform: scale(1.05) rotate(2deg);
 }
 
 .avatar-glow {
   position: absolute;
-  top: -4px;
-  width: 118px;
-  height: 118px;
+  width: 116px;
+  height: 116px;
   background: var(--gradient-accent);
   border-radius: 50%;
-  filter: blur(8px);
-  opacity: 0.45;
-  animation: pulse-glow 3s ease-in-out infinite;
+  filter: blur(10px);
+  opacity: 0.5;
+  animation: spin-glow 6s linear infinite;
+  z-index: 1;
+}
+
+@keyframes spin-glow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .profile-name {
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 0.25rem;
   line-height: 1.2;
 }
 
-.profile-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--accent-color);
-}
-
-.profile-company {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
+/* Horizontal border divider between name and location */
+.profile-divider {
+  width: 80px;
+  height: 2px;
+  background: var(--gradient-accent);
+  border-radius: 9999px;
+  margin: 1.25rem 0;
+  opacity: 0.85;
 }
 
 .location-badge {
@@ -232,6 +335,12 @@ END:VCARD`
   justify-content: center;
   font-size: 1.05rem;
   padding: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.save-contact-btn:hover {
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  transform: translateY(-2px);
 }
 
 .save-contact-btn.success {
@@ -264,40 +373,39 @@ END:VCARD`
 }
 
 .comm-icon-box {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  transition: var(--transition-smooth);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.communication-btn:hover .comm-icon-box {
-  box-shadow: var(--shadow-sm);
-  border-color: var(--accent-color);
-}
-
-/* Custom platform hover coloring */
+/* Custom platform hover coloring with glow */
 .communication-btn:hover .comm-icon-box.call-color {
   color: #3b82f6;
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.35);
 }
 
 .communication-btn:hover .comm-icon-box.whatsapp-color {
   color: #10b981;
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
 }
 
 .communication-btn:hover .comm-icon-box.email-color {
   color: #ec4899;
-  background: rgba(236, 72, 153, 0.08);
-  border-color: rgba(236, 72, 153, 0.3);
+  background: rgba(236, 72, 153, 0.1);
+  border-color: rgba(236, 72, 153, 0.4);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.35);
 }
 
 .social-links-footer {
