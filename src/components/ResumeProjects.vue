@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Pagination, Autoplay, Navigation } from 'swiper/modules'
-import { ExternalLink, ChevronLeft, ChevronRight } from '@lucide/vue'
+import { ExternalLink, ChevronLeft, ChevronRight, X } from '@lucide/vue'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -16,6 +16,22 @@ import blmsList from '../assets/blms_list.png'
 const activeFilter = ref('All')
 const filters = ['All', 'Full-Stack', 'Frontend', 'Tools', 'DevOps']
 const swiperModules = [Pagination, Autoplay, Navigation]
+
+// Lightbox state and control logic
+const selectedImage = ref(null)
+const openLightbox = (img) => {
+  selectedImage.value = img
+  document.body.style.overflow = 'hidden' // Lock body scroll when zoom active
+}
+const closeLightbox = () => {
+  selectedImage.value = null
+  document.body.style.overflow = ''
+}
+const handleKeydown = (e) => {
+  if (e.key === 'Escape') closeLightbox()
+}
+onMounted(() => window.addEventListener('keydown', handleKeydown))
+onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
 
 const projects = [
   {
@@ -206,7 +222,12 @@ const filteredProjects = computed(() => {
                 class="project-image-slider"
               >
                 <swiper-slide v-for="(img, imgIdx) in project.images" :key="imgIdx">
-                  <img :src="img" :alt="project.title + ' screenshot ' + (imgIdx + 1)" class="project-screenshot" />
+                  <img 
+                    :src="img" 
+                    :alt="project.title + ' screenshot ' + (imgIdx + 1)" 
+                    class="project-screenshot" 
+                    @click="openLightbox(img)"
+                  />
                 </swiper-slide>
               </swiper>
               <span class="project-category-badge">{{ project.category }}</span>
@@ -248,6 +269,18 @@ const filteredProjects = computed(() => {
 
     <!-- Slider Pagination Dots below carousel -->
     <div class="projects-pagination"></div>
+
+    <!-- Lightbox Zoom Overlay Modal -->
+    <transition name="fade">
+      <div v-if="selectedImage" class="lightbox-overlay" @click="closeLightbox">
+        <button class="lightbox-close" @click="closeLightbox" aria-label="Close image zoom">
+          <X :size="24" />
+        </button>
+        <div class="lightbox-content" @click.stop>
+          <img :src="selectedImage" alt="Enlarged screenshot" class="lightbox-image" />
+        </div>
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -578,5 +611,96 @@ const filteredProjects = computed(() => {
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+/* Lightbox zoom modal styles */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(16px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2010;
+}
+
+.lightbox-close:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: rotate(90deg);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0d121f;
+  animation: zoom-in-ani 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* Hover Zoom Cursor on screenshots */
+.project-screenshot {
+  cursor: zoom-in;
+}
+
+/* Animations */
+@keyframes zoom-in-ani {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
