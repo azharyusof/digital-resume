@@ -3,15 +3,15 @@ import { Code, Server, Wrench } from '@lucide/vue'
 
 const skillCategories = [
   {
-    title: 'Frontend Development',
+    title: 'Frontend & Mobile',
     icon: Code,
     color: 'var(--accent-color)',
     skills: [
-      { name: 'Vue 3 / Composition API', level: 95 },
-      { name: 'JavaScript (ES6+) / TypeScript', level: 90 },
-      { name: 'HTML5 / CSS3 / SCSS', level: 90 },
-      { name: 'Tailwind CSS & Responsive Design', level: 95 },
-      { name: 'State Management (Pinia/Vuex)', level: 85 }
+      { name: 'Vue.js (Composition API)', level: 95 },
+      { name: 'React.js / JavaScript (ES6+)', level: 90 },
+      { name: 'Flutter (Mobile Development)', level: 85 },
+      { name: 'Android Native Development', level: 80 },
+      { name: 'HTML5 / CSS3 / Responsive Layouts', level: 90 }
     ]
   },
   {
@@ -19,23 +19,23 @@ const skillCategories = [
     icon: Server,
     color: 'var(--accent-secondary)',
     skills: [
-      { name: 'Node.js / Express', level: 88 },
-      { name: 'REST & GraphQL APIs', level: 90 },
-      { name: 'PostgreSQL / MongoDB', level: 80 },
-      { name: 'Redis Caching & Queues', level: 75 },
-      { name: 'Firebase & Supabase', level: 85 }
+      { name: 'Laravel (PHP)', level: 90 },
+      { name: '.NET Core / .NET 8 / ASP.NET MVC', level: 90 },
+      { name: 'MySQL', level: 88 },
+      { name: 'Microsoft SQL Server (MSSQL)', level: 88 },
+      { name: 'Web / RESTful API Integrations', level: 92 }
     ]
   },
   {
-    title: 'DevOps & Tooling',
+    title: 'DevOps & QA',
     icon: Wrench,
     color: '#10b981', /* Emerald */
     skills: [
-      { name: 'Git / GitHub Actions', level: 90 },
-      { name: 'Docker & Containerization', level: 80 },
-      { name: 'Vite / Webpack Build Tools', level: 88 },
-      { name: 'AWS (S3, EC2, Lambda)', level: 75 },
-      { name: 'Jest / Vitest / Cypress (TDD)', level: 85 }
+      { name: 'CI/CD (GitHub Actions / Git)', level: 92 },
+      { name: 'Docker & Containerization', level: 85 },
+      { name: 'Monitoring (ELK Stack & Grafana)', level: 80 },
+      { name: 'Automated Testing (Playwright / K6)', level: 82 },
+      { name: 'SecOps (HashiCorp Vault / SonarQube)', level: 80 }
     ]
   }
 ]

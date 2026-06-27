@@ -41,7 +41,7 @@ const experiences = [
 
 <template>
   <section id="experience" class="experience-section">
-    <h2 class="section-title">Work Experience</h2>
+    <h2 class="section-title">Work Experiences</h2>
     
     <div class="timeline-container">
       <div v-for="(job, index) in experiences" :key="index" class="timeline-item">

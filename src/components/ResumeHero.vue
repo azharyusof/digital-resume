@@ -12,7 +12,7 @@ defineProps({
   },
   location: {
     type: String,
-    default: 'Selangor, MY'
+    default: 'Selangor, MY | Kuala Lumpur, MY'
   },
   bio: {
     type: String,

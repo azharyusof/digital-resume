@@ -93,7 +93,7 @@ const qrCodeUrl = computed(() => {
         </div>
         
         <p class="qr-description">
-          Scan this code with your mobile device to open my dynamic contact screen. You can instantly message me on WhatsApp, call me, or save my details directly to your phone.
+          Scan the QR code to access my digital profile. Connect instantly via WhatsApp, initiate a direct call, or seamlessly save my contact details to your device.
         </p>
 
         <div class="qr-display-container">
@@ -104,9 +104,9 @@ const qrCodeUrl = computed(() => {
         </div>
 
         <div class="desktop-fallback">
-          <span class="fallback-label">Or open directly on desktop:</span>
+          <span class="fallback-label">Alternatively, access via direct link:</span>
           <a :href="targetUrl" class="fallback-link">
-            ay.dev/#/contact-card
+            azharyusof.github.io/virtual-card
           </a>
         </div>
       </div>
