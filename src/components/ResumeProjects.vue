@@ -1,27 +1,27 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Pagination, Autoplay } from 'swiper/modules'
-import { ExternalLink } from '@lucide/vue'
+import { Pagination, Autoplay, Navigation } from 'swiper/modules'
+import { ExternalLink, ChevronLeft, ChevronRight } from '@lucide/vue'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
 // Import assets
 import blmsDashboard from '../assets/blms_dashboard.png'
 import blmsList from '../assets/blms_list.png'
 
 const activeFilter = ref('All')
-
-const filters = ['All', 'Full-Stack', 'Frontend', 'Tools']
-
-const swiperModules = [Pagination, Autoplay]
+const filters = ['All', 'Full-Stack', 'Frontend', 'Tools', 'DevOps']
+const swiperModules = [Pagination, Autoplay, Navigation]
 
 const projects = [
   {
     title: 'Business License Management (BLMS)',
-    description: 'A centralized system for tracking, reviewing, and maintaining business licenses across domestic and international UEM Edgenta subsidiaries. Features analytics dashboards, license renewal tracking, and document downloads.',
+    company: 'UEM Edgenta Berhad',
+    description: 'Centralized enterprise platform tracking and renewing business licenses across domestic and international UEM subsidiaries. Handles automatic expirations and multi-user verification audits.',
     category: 'Full-Stack',
     tech: ['React.js', '.NET Core', 'MSSQL', 'Chart.js', 'Bootstrap'],
     demoUrl: 'https://example.com',
@@ -31,7 +31,8 @@ const projects = [
   },
   {
     title: 'Workforce Management System (WMS)',
-    description: 'An enterprise system designed for team administration, scheduling, attendance logging, overtime computations, leave applications, and analytical reporting.',
+    company: 'XOX Technology Berhad',
+    description: 'Enterprise team management platform for attendance logging, shift scheduling, overtime calculations, leave workflows, and analytical reporting services.',
     category: 'Full-Stack',
     tech: ['Vue.js', 'Laravel', 'MySQL', 'Tailwind CSS'],
     demoUrl: 'https://example.com',
@@ -40,8 +41,9 @@ const projects = [
     images: []
   },
   {
-    title: 'SIRIM Label Scanner Mobile App',
-    description: 'A scanning and verification app deployed to Google Play Store, AppGallery, and App Store. Allows users to scan and authenticate product label details.',
+    title: 'Enhanced SIRIM Label Scanner',
+    company: 'XOX Technology Berhad',
+    description: 'Cross-platform mobile application deployed on major stores, enabling consumers to verify product authenticity, certifications, and access detailed data sheets.',
     category: 'Frontend',
     tech: ['Flutter', '.NET 8', 'MSSQL', 'REST APIs'],
     demoUrl: 'https://example.com',
@@ -51,12 +53,68 @@ const projects = [
   },
   {
     title: 'Vending Machine System (VMS)',
-    description: 'An IoT vending machine management and dashboard system. Handles inventory logging, sales reporting, and vending machine telemetry APIs.',
-    category: 'Tools',
+    company: 'XOX Technology Berhad',
+    description: 'IoT vending machine integration managing payment gateways, digital product catalogs, remote hardware telemetry, and machine maintenance APIs.',
+    category: 'Full-Stack',
     tech: ['Android Native', 'Laravel', 'MySQL', 'Java / Kotlin'],
     demoUrl: 'https://example.com',
     githubUrl: 'https://github.com',
     gradient: 'linear-gradient(135deg, #f59e0b, #eab308)',
+    images: []
+  },
+  {
+    title: 'Travel Management (Edgenta Travel)',
+    company: 'UEM Edgenta Berhad',
+    description: 'Organisational travel booking portal streamlining flight, accommodation, transport scheduling, and claim workflows for corporate staff.',
+    category: 'Frontend',
+    tech: ['Vue.js', '.NET Core', 'MSSQL', 'Bootstrap'],
+    demoUrl: 'https://example.com',
+    githubUrl: 'https://github.com',
+    gradient: 'linear-gradient(135deg, #3b82f6, #06b6d4)',
+    images: []
+  },
+  {
+    title: 'DevOps & CI/CD Infrastructure',
+    company: 'UEM Edgenta Berhad',
+    description: 'Enterprise DevOps pipeline automating code quality audits, container builds, monitoring telemetry, security compliance, and credential storage.',
+    category: 'DevOps',
+    tech: ['GitHub Actions', 'Docker', 'ELK Stack', 'Grafana', 'HashiCorp Vault', 'K6', 'Playwright', 'SonarQube'],
+    demoUrl: 'https://example.com',
+    githubUrl: 'https://github.com',
+    gradient: 'linear-gradient(135deg, #1f2937, #111827)',
+    images: []
+  },
+  {
+    title: 'Gatepass Management System (GMS)',
+    company: 'Felda Prodata System Sdn Bhd',
+    description: 'Real-time monitoring and logistics control system tracking palm oil lorry movements, security clearing, and mill entry/exit gates.',
+    category: 'Full-Stack',
+    tech: ['.NET MVC', 'MSSQL', 'C#', 'JavaScript'],
+    demoUrl: 'https://example.com',
+    githubUrl: 'https://github.com',
+    gradient: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+    images: []
+  },
+  {
+    title: 'Palm Fruit Grading System',
+    company: 'Felda Prodata System Sdn Bhd',
+    description: 'Weighing bridge integration and fruit grading system automating thermal receipt printing and regional management reporting.',
+    category: 'Tools',
+    tech: ['.NET MVC', 'MSSQL', 'C#', 'Hardware Integration'],
+    demoUrl: 'https://example.com',
+    githubUrl: 'https://github.com',
+    gradient: 'linear-gradient(135deg, #f43f5e, #ec4899)',
+    images: []
+  },
+  {
+    title: 'FELDA GIS Plantation System',
+    company: 'Felda Prodata System Sdn Bhd',
+    description: 'Geospatial plantation dashboard mapping oil palm trees, asset coordinates, and residential areas in FELDA sectors.',
+    category: 'Frontend',
+    tech: ['React.js', 'Laravel', 'MSSQL', 'GIS / Leaflet'],
+    demoUrl: 'https://example.com',
+    githubUrl: 'https://github.com',
+    gradient: 'linear-gradient(135deg, #06b6d4, #10b981)',
     images: []
   }
 ]
@@ -72,7 +130,19 @@ const filteredProjects = computed(() => {
 <template>
   <section id="projects" class="projects-section">
     <div class="projects-header">
-      <h2 class="section-title">Featured Projects</h2>
+      <div class="title-nav-group">
+        <h2 class="section-title">Featured Projects</h2>
+        
+        <!-- Slider Navigation Controls -->
+        <div class="slider-controls">
+          <button class="slider-btn custom-proj-prev" aria-label="Previous Project">
+            <ChevronLeft :size="20" />
+          </button>
+          <button class="slider-btn custom-proj-next" aria-label="Next Project">
+            <ChevronRight :size="20" />
+          </button>
+        </div>
+      </div>
       
       <!-- Filter Tabs -->
       <div class="filter-bar">
@@ -88,73 +158,103 @@ const filteredProjects = computed(() => {
       </div>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="grid-2 projects-grid">
-      <div 
+    <!-- Projects Slider -->
+    <swiper
+      :key="activeFilter"
+      :modules="swiperModules"
+      :slides-per-view="1"
+      :space-between="24"
+      :pagination="{ clickable: true, el: '.projects-pagination' }"
+      :navigation="{
+        prevEl: '.custom-proj-prev',
+        nextEl: '.custom-proj-next',
+        disabledClass: 'disabled'
+      }"
+      :breakpoints="{
+        '768': {
+          slidesPerView: 2,
+          spaceBetween: 24
+        },
+        '1100': {
+          slidesPerView: 3,
+          spaceBetween: 24
+        }
+      }"
+      class="projects-swiper animate-fade-in"
+    >
+      <swiper-slide 
         v-for="(project, index) in filteredProjects" 
         :key="index"
-        class="glass-card project-card animate-fade-in"
       >
-        <!-- Interactive macOS-style Browser Mockup -->
-        <div class="browser-mockup">
-          <div class="browser-bar">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
+        <div class="glass-card project-card">
+          <!-- Interactive macOS-style Browser Mockup -->
+          <div class="browser-mockup">
+            <div class="browser-bar">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+
+            <!-- Image Slider (for cards with screenshots) -->
+            <div v-if="project.images && project.images.length > 0" class="project-slider-wrapper">
+              <swiper
+                :modules="[Pagination, Autoplay]"
+                :slides-per-view="1"
+                :loop="true"
+                :autoplay="{ delay: 4000, disableOnInteraction: false }"
+                :pagination="{ clickable: true }"
+                class="project-image-slider"
+              >
+                <swiper-slide v-for="(img, imgIdx) in project.images" :key="imgIdx">
+                  <img :src="img" :alt="project.title + ' screenshot ' + (imgIdx + 1)" class="project-screenshot" />
+                </swiper-slide>
+              </swiper>
+              <span class="project-category-badge">{{ project.category }}</span>
+            </div>
+
+            <!-- Solid Gradient Banner (fallback if no screenshots) -->
+            <div v-else class="project-banner" :style="{ background: project.gradient }">
+              <span class="project-category-badge">{{ project.category }}</span>
+            </div>
           </div>
 
-          <!-- Image Slider (for cards with screenshots) -->
-          <div v-if="project.images && project.images.length > 0" class="project-slider-wrapper">
-            <swiper
-              :modules="swiperModules"
-              :slides-per-view="1"
-              :loop="true"
-              :autoplay="{ delay: 4000, disableOnInteraction: false }"
-              :pagination="{ clickable: true }"
-              class="project-image-slider"
-            >
-              <swiper-slide v-for="(img, imgIdx) in project.images" :key="imgIdx">
-                <img :src="img" :alt="project.title + ' screenshot ' + (imgIdx + 1)" class="project-screenshot" />
-              </swiper-slide>
-            </swiper>
-            <span class="project-category-badge">{{ project.category }}</span>
-          </div>
+          <div class="project-content">
+            <div class="company-badge-wrapper">
+              <span class="company-badge">{{ project.company }}</span>
+            </div>
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-desc">{{ project.description }}</p>
 
-          <!-- Solid Gradient Banner (fallback if no screenshots) -->
-          <div v-else class="project-banner" :style="{ background: project.gradient }">
-            <span class="project-category-badge">{{ project.category }}</span>
+            <!-- Tech Tags -->
+            <div class="tech-tags">
+              <span v-for="t in project.tech" :key="t" class="tech-badge">
+                {{ t }}
+              </span>
+            </div>
+
+            <!-- Project Actions (Disabled/Commented as corporate applications) -->
+            <!-- <div class="project-links">
+              <a :href="project.githubUrl" target="_blank" rel="noopener" class="btn btn-secondary btn-sm flex-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-svg"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg> Code
+              </a>
+              <a :href="project.demoUrl" target="_blank" rel="noopener" class="btn btn-primary btn-sm flex-center">
+                <ExternalLink :size="16" /> Demo
+              </a>
+            </div> -->
           </div>
         </div>
+      </swiper-slide>
+    </swiper>
 
-        <div class="project-content">
-          <h3 class="project-title">{{ project.title }}</h3>
-          <p class="project-desc">{{ project.description }}</p>
-
-          <!-- Tech Tags -->
-          <div class="tech-tags">
-            <span v-for="t in project.tech" :key="t" class="tech-badge">
-              {{ t }}
-            </span>
-          </div>
-
-          <!-- Project Actions (Disabled/Commented as corporate applications) -->
-          <!-- <div class="project-links">
-            <a :href="project.githubUrl" target="_blank" rel="noopener" class="btn btn-secondary btn-sm flex-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-svg"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg> Code
-            </a>
-            <a :href="project.demoUrl" target="_blank" rel="noopener" class="btn btn-primary btn-sm flex-center">
-              <ExternalLink :size="16" /> Demo
-            </a>
-          </div> -->
-        </div>
-      </div>
-    </div>
+    <!-- Slider Pagination Dots below carousel -->
+    <div class="projects-pagination"></div>
   </section>
 </template>
 
 <style scoped>
 .projects-section {
   padding: 3rem 0;
+  position: relative;
 }
 
 .projects-header {
@@ -164,6 +264,46 @@ const filteredProjects = computed(() => {
   flex-wrap: wrap;
   gap: 1.5rem;
   margin-bottom: 2.5rem;
+}
+
+.title-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.slider-controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.slider-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.slider-btn:hover:not(.disabled) {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+.slider-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .filter-bar {
@@ -197,8 +337,8 @@ const filteredProjects = computed(() => {
   color: #ffffff;
 }
 
-.projects-grid {
-  margin-top: 1rem;
+.projects-swiper {
+  padding: 1rem 0 3rem 0; /* space for card hover and pagination */
 }
 
 .project-card {
@@ -206,6 +346,7 @@ const filteredProjects = computed(() => {
   flex-direction: column;
   padding: 0;
   overflow: hidden;
+  height: 100%;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
 }
 
@@ -265,7 +406,7 @@ const filteredProjects = computed(() => {
 
 .project-slider-wrapper {
   position: relative;
-  height: 220px;
+  height: 200px;
   width: 100%;
   overflow: hidden;
 }
@@ -291,7 +432,7 @@ const filteredProjects = computed(() => {
 }
 
 .project-banner {
-  height: 220px;
+  height: 200px;
   width: 100%;
   position: relative;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
@@ -317,6 +458,57 @@ const filteredProjects = computed(() => {
   z-index: 10;
 }
 
+.project-content {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.company-badge-wrapper {
+  margin-bottom: 0.5rem;
+}
+
+.company-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-badge);
+  color: var(--accent-color);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
 /* Custom Swiper Pagination Styles inside project cards */
 .project-image-slider :deep(.swiper-pagination-bullet) {
   background: #fff;
@@ -333,64 +525,33 @@ const filteredProjects = computed(() => {
   border-radius: 4px;
 }
 
-.project-content {
-  padding: 1.75rem 2rem;
+/* Main projects Swiper pagination styling */
+.projects-pagination {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.project-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.project-desc {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  flex-grow: 1;
-}
-
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 1.75rem;
+  margin-top: 1rem;
 }
 
-.tech-badge {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: var(--bg-badge);
-  color: var(--accent-color);
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+.projects-pagination :deep(.swiper-pagination-bullet) {
+  background: var(--text-secondary);
+  opacity: 0.25;
+  width: 8px;
+  height: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  border-radius: 0.5rem;
-}
-
-.flex-center {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
+.projects-pagination :deep(.swiper-pagination-bullet-active) {
+  background: var(--accent-color);
+  opacity: 1;
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
 @media print {
-  .filter-bar, .project-links {
+  .filter-bar, .slider-controls, .projects-pagination {
     display: none !important;
   }
   .project-card {
@@ -399,24 +560,23 @@ const filteredProjects = computed(() => {
     box-shadow: none !important;
     page-break-inside: avoid;
   }
-  .project-banner {
-    height: 60px !important;
-    border-bottom: 1px solid #ccc;
-  }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .projects-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
+  
+  .title-nav-group {
+    justify-content: space-between;
+  }
+  
   .filter-bar {
     width: 100%;
     overflow-x: auto;
-  }
-  .filter-tab {
-    flex-grow: 1;
-    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 }
 </style>
