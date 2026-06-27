@@ -50,10 +50,10 @@ END:VCARD`
     <div class="bg-glow orb-1"></div>
     <div class="bg-glow orb-2"></div>
 
-    <!-- Back Button -->
-    <!-- <a href="#" class="back-link">
-      <ArrowLeft :size="16" /> Back to Resume
-    </a> -->
+    <!-- Modern Floating Back Button -->
+    <a href="#" class="btn-back-home" title="Back to Resume">
+      <ArrowLeft :size="18" />
+    </a>
 
     <!-- Virtual Business Card Panel -->
     <div class="glass-card business-card-panel">
@@ -179,21 +179,32 @@ END:VCARD`
   to { transform: translate(-40px, -30px) scale(0.9); }
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+.btn-back-home {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  font-family: var(--font-heading);
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
   text-decoration: none;
-  margin-bottom: 2rem;
-  transition: var(--transition-smooth);
 }
 
-.back-link:hover {
-  color: var(--accent-color);
-  transform: translateX(-3px);
+.btn-back-home:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #fff;
+  transform: translateX(-4px);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
 }
 
 .business-card-panel {
@@ -301,10 +312,10 @@ END:VCARD`
 /* Horizontal border divider between name and location */
 .profile-divider {
   width: 80px;
-  height: 2px;
+  height: 3px;
   background: var(--gradient-accent);
   border-radius: 9999px;
-  margin: 1.25rem 0;
+  margin: 1rem 0;
   opacity: 0.85;
 }
 
