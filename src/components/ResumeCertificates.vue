@@ -177,7 +177,7 @@ const certificates = [
   margin: 0 -0.5rem;
 }
 
-.swiper-slide {
+.certificates-slider :deep(.swiper-slide) {
   height: auto; /* Allow slides to match tallest element height */
   display: flex;
 }

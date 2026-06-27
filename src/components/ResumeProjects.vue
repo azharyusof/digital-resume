@@ -374,6 +374,11 @@ const filteredProjects = computed(() => {
   padding: 1rem 0 3rem 0; /* space for card hover and pagination */
 }
 
+.projects-swiper :deep(.swiper-slide) {
+  height: auto;
+  display: flex;
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
