@@ -69,10 +69,10 @@ const closeMobileMenu = () => {
       <nav class="nav-bar">
         <div class="container nav-container">
           <!-- Logo -->
-          <a href="#" class="logo-link">
+          <!-- <a href="#" class="logo-link">
             <Terminal :size="22" class="logo-icon" />
             <span class="logo-text">ay<span class="logo-dot">.</span>dev</span>
-          </a>
+          </a> -->
 
           <!-- Desktop Navigation Links -->
           <div class="nav-links-desktop">
@@ -132,7 +132,7 @@ const closeMobileMenu = () => {
       <footer class="app-footer">
         <div class="container footer-container">
           <p class="footer-copy">© 2026 Azhar Yusof. Built with Vue 3 & Vite.</p>
-          <p class="footer-status">Designed for performance and responsiveness.</p>
+          <!-- <p class="footer-status">Designed for performance and responsiveness.</p> -->
         </div>
       </footer>
     </template>

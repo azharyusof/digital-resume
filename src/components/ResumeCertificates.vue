@@ -78,14 +78,14 @@ const certificates = [
   <section id="certificates" class="certificates-section">
     <div class="section-header">
       <h2 class="section-title">Professional Certificates</h2>
-      <div class="slider-controls">
+      <!-- <div class="slider-controls">
         <button class="custom-prev-btn" aria-label="Previous slide">
           <ChevronLeft :size="20" />
         </button>
         <button class="custom-next-btn" aria-label="Next slide">
           <ChevronRight :size="20" />
         </button>
-      </div>
+      </div> -->
     </div>
 
     <!-- Swiper Slider Container -->

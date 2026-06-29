@@ -12,6 +12,7 @@ import 'swiper/css/navigation'
 // Import assets
 import blmsDashboard from '../assets/blms_dashboard.png'
 import blmsList from '../assets/blms_list.png'
+import wmsDashboard from '../assets/wms_dashboard.png'
 
 const activeFilter = ref('All')
 const filters = ['All', 'Full-Stack', 'Frontend', 'Tools', 'DevOps']
@@ -54,7 +55,7 @@ const projects = [
     demoUrl: 'https://example.com',
     githubUrl: 'https://github.com',
     gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-    images: []
+    images: [wmsDashboard]
   },
   {
     title: 'Enhanced SIRIM Label Scanner',
@@ -150,14 +151,14 @@ const filteredProjects = computed(() => {
         <h2 class="section-title">Featured Projects</h2>
         
         <!-- Slider Navigation Controls -->
-        <div class="slider-controls">
+        <!-- <div class="slider-controls">
           <button class="slider-btn custom-proj-prev" aria-label="Previous Project">
             <ChevronLeft :size="20" />
           </button>
           <button class="slider-btn custom-proj-next" aria-label="Next Project">
             <ChevronRight :size="20" />
           </button>
-        </div>
+        </div> -->
       </div>
       
       <!-- Filter Tabs -->
