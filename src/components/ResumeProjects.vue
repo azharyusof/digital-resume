@@ -13,6 +13,8 @@ import 'swiper/css/navigation'
 import blmsDashboard from '../assets/blms_dashboard.png'
 import blmsList from '../assets/blms_list.png'
 import wmsDashboard from '../assets/wms_dashboard.png'
+import wmsShift from '../assets/wms_shift.png'
+import wmsOvertime from '../assets/wms_overtime.png'
 
 const activeFilter = ref('All')
 const filters = ['All', 'Full-Stack', 'Frontend', 'Tools', 'DevOps']
@@ -55,7 +57,7 @@ const projects = [
     demoUrl: 'https://example.com',
     githubUrl: 'https://github.com',
     gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-    images: [wmsDashboard]
+    images: [wmsDashboard, wmsShift, wmsOvertime]
   },
   {
     title: 'Enhanced SIRIM Label Scanner',
